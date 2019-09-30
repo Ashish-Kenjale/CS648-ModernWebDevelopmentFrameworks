@@ -3,14 +3,33 @@
     background: url($image) $position $origin;
 }
 
-@mixin handleMediaQuery($args...) {
-    @if length($args) == 1 {
-        @media (max-width: nth($args, 1)) {
-            @content
-        }
-    } @else {
-        @media (min-width: nth($args, 1)) and (max-width: nth($args, 2)) {
-            @content;
-        }
+@mixin setBoxProperties($width, $height, $margin: 0) {
+    width: $width;
+    height: $height;
+    margin: $margin;
+}
+
+@mixin setHeaderProperties($color, $font-weight, $font-size, $line-height: 0) {
+    color: $color;
+    font-weight: $font-weight;
+    font-size: $font-size;
+    line-height: $line-height;
+}
+
+@mixin largeScreenMediaQuery {
+    @media (max-width: #{$large-screen-breakpoint}) {
+        @content;
+    }
+}
+
+@mixin mediumScreenMediaQuery {
+    @media (max-width: #{$medium-screen-breakpoint}) {
+        @content;
+    }
+}
+
+@mixin smallScreenMediaQuery {
+    @media (max-width: #{$small-screen-breakpoint}) {
+        @content;
     }
 }

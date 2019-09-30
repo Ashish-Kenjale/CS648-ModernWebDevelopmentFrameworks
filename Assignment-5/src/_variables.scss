@@ -7,6 +7,8 @@ $color-footer-greybar: #F5F6F6;
 $color-footer-background: #30353D;
 $color-headline: #F25C43;
 $body-font: 'Roboto';
-$img-body-bg: '../images/bg.gif';
-$img-main-logo: '../images/logo.png';
-$img-social-media: '../images/social-media.png';
+
+$base-url: '../images';
+$img-body-bg: '#{$base-url}/bg.gif';
+$img-main-logo: '#{$base-url}/logo.png';
+$img-social-media: '#{$base-url}/social-media.png';
