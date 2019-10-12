@@ -1,4 +1,8 @@
 // Countdown (5 points)
+// window.alert("Enter the number to countdown from:");
+
+// window.prompt("Enter the number to countdown from:");
+window.confirm("Are you 18 yrs or older?");
 
 var num = window.prompt("Enter the number to countdown from:");
 num = parseInt(num, 10);
