@@ -34,10 +34,6 @@ function playGame() {
     if (isRock) {
         //Result is Rocks
 
-        // •	Rock destroys scissors.
-        // •	Scissors cut paper.
-        // •	Paper covers rock.
-
         if (isUserChoiceRock) {
             window.alert("It's a draw.");
         } else if (isUserChoicePaper) {
@@ -45,7 +41,7 @@ function playGame() {
         } else if (isUserChoiceScissors) {
             window.alert("You lose.");
         } else {
-            window.alert("Invalid choice.")
+            window.alert("Invalid choice.");
         }
     } else if (isPaper) {
         //Result is Paper
@@ -57,7 +53,7 @@ function playGame() {
         } else if (isUserChoiceRock) {
             window.alert("You lose.");
         } else {
-            window.alert("Invalid choice.")
+            window.alert("Invalid choice.");
         }
     } else {
         // Result is Scissors
