@@ -1,5 +1,9 @@
 /*eslint-env browser*/
 
+var primaryColor = "#589ACE";
+var secondary1 = "#D2DEEE";
+var secondary2 = "#EAEFF5";
+
 var employee_list;
 
 employee_list = [["Albus Dumbledor", "Headmaster", 3213], ["Rubeus Hagrid", "Gamekeeper", 3214], ["Draco Malfoy", "Villain", 3215], ["Sirius Black", "Godfather", 3216], ["Lily Potter", "Auror", 3217]];
@@ -10,71 +14,59 @@ var $ = function (id) {
     return document.getElementById(id);
 };
 
-// Event handler for Delete employee button
-var delEmp = function (e) {
-    "use strict";
-    
-};
-
-var addEmp = function (e) {
+var empAdd = function () {
     "use strict";
 
     window.console.log("In addEmp()");
 
-    var name, title, extension, header = "", msg, required;
+    var name, title, extension, registration_header, header = "", msg, required;
 
     required = "* Required field";
     msg = "Please review your entries and complete all required fields";
 
-    name = $("emp_name").value;
-    title = $("emp_title").value;
-    extension = $("emp_extension").value;
+    name = $("emp_name");
+    title = $("emp_title");
+    extension = $("emp_extension");
+    registration_header = $("registration_header");
 
     window.console.log("in addEmp");
-    if (name === "") {
-        var errorContent1 = window.document.createTextNode(required);
-
-        $("emp_name").nextElementSibling.appendChild(errorContent1);
-        window.console.log("Name Sibling Element: "+$("emp_name").nextElementSibling.id);
+    if (name.value === "") {
+        name.nextElementSibling.innerHTML = required;
         header = msg;
+    } else {
+        name.nextElementSibling.innerHTML = "";
     }
 
-    if (title === "") {
-        var errorContent2 = window.document.createTextNode(required);
-        $("emp_title").nextElementSibling.appendChild(errorContent2);
-        // $("emp_title").nextElementSibling.nodeValue = required;
+    if (title.value === "") {
+        title.nextElementSibling.innerHTML = required;
         header = msg;
+    } else {
+        title.nextElementSibling.innerHTML = "";
     }
 
-    if (extension === "") {
-        var errorContent3 = window.document.createTextNode(required);
-        $("emp_extension").nextElementSibling.appendChild(errorContent3);
-        // $("emp_extension").nextElementSibling.nodeValue = required;
+    if (extension.value === "") {
+        extension.nextElementSibling.innerHTML = required;
         header = msg;
+    } else {
+        extension.nextElementSibling.innerHTML = "";
     }
-
-    $("registration_header").firstChild.nodeValue = header;
 
     if (header === msg) {
-        // html = html + "<tr><td>Email:</td><td>" + email + "</td></tr>";
-        // html = html + "<tr><td>Phone:</td><td>" + phone + "</td></tr>";
-        // html = html + "<tr><td>Country:</td><td>" + country + "</td></tr>";
-        // html = html + "<tr><td>Contact:</td><td>" + contact + "</td></tr>";
-        // html = html + "<tr><td>Terms:</td><td>" + terms + "</td></tr>";
-        // $("registration_info").innerHTML = html;
+        registration_header.firstChild.nodeValue = header;
     } else {
-        // $("registration_info").innerHTML = "";
-        
-
-        var newEmp = [name, title, extension];
-        var index = employee_list.push(newEMp);
+        var newEmp = [name.value, title.value, extension.value];
+        var index = employee_list.push(newEmp);
 
         console.log("Adding " + newEmp);
-        addTableRow(index-1);
+        addEmployeeTableRow(index-1);
         window.alert("New employee added!");
-        name = "";
-        title = "";
-        ext = "";
+        name.value = "";
+        title.value = "";
+        extension.value = "";
+        registration_header.firstChild.nodeValue = "";
+        name.nextElementSibling.innerHTML = "";
+        title.nextElementSibling.innerHTML = "";
+        extension.nextElementSibling.innerHTML = "";
 
         window.console.log("submitting");
 
@@ -84,34 +76,34 @@ var addEmp = function (e) {
 }
 
 
-function addTableRow(index) {
-    var table = $("employeesTable");
+function addEmployeeTableRow(index) {
+    var table = $("employee_info_table");
   
     // creating cell for employee data
     var row = document.createElement("tr");
-    row.id = employees[index][2] + " row";
-    for (j = 0; j < employees[index].length; j++) {
+    row.id = employee_list[index][2] + "_row";
+    for (var j = 0; j < employee_list[index].length; j++) {
       var td = document.createElement("td");
-      td.innerHTML = employees[index][j];
-      td.style.border = "1px solid white";
-      td.style.font = "14px arial";
+      td.innerHTML = employee_list[index][j];
+    //   td.style.border = "1px solid white";
+    //   td.style.font = "14px arial";
       row.appendChild(td);
     }
   
     // need a cell to place the delete button in
     var td = document.createElement("td");
-    td.style.border = "1px solid white";
-    td.align = "center";
+    // td.style.border = "1px solid white";
+    // td.align = "center";
     row.appendChild(td);
   
     // adding delete button
     var button = document.createElement("button");
     button.innerHTML = "Delete";
-    button.style.color = "white";
-    button.style.background = primaryColor;
-    button.style.padding = "3px 20px";
-    button.style.margin = "5px 0";
-    button.id = employees[index][2]+" btn";
+    // button.style.color = "white";
+    // button.style.background = primaryColor;
+    // button.style.padding = "3px 20px";
+    // button.style.margin = "5px 0";
+    button.id = employee_list[index][2]+"_btn";
     row.lastChild.appendChild(button);
   
     // alternating row color
@@ -121,138 +113,145 @@ function addTableRow(index) {
       row.style.background = secondary2;
     }
     table.appendChild(row);
-  
+    
+    table.previousElementSibling.innerHTML = "Showing "+ employee_list.length + " Employees";
 }
 
-
-var init = function (e) {
-
-    // $("btn_emp_add").addEventListener("click", addEmp(e)); 
-    document.getElementById("btn_emp_add").addEventListener("click", addEmp(e)); 
+function deleteEmployee(id, ext) {
+    employee_list.splice(id, 1);
+    var row = $(ext + "_row");
+    console.log("Deleting row: " + row.id);
+    row.remove();
 
     
+    $("employee_info_table").previousElementSibling.innerHTML = "Showing "+ employee_list.length + " Employees";
+  }
 
-    window.console.log(employee_list);
 
-    display(employee_list);
-    window.console.log(employee_list);
+  function createInputs() {
+    var formDiv = document.createElement("div");
+    formDiv.id = "registration_form_div";
+    formDiv.style.minWidth = "200px";
+    formDiv.style.maxWidth = "50%";
+    formDiv.style.display = "block";
+    document.body.appendChild(formDiv);
 
-}
+    var inputDiv1 = document.createElement("div");
+    var label1 = document.createElement("label");
+    label1.innerHTML = "Name";
+    var input1 = document.createElement("input");
+    input1.style.margin = "10px";
+    input1.id = "emp_name";
+    var span1 = document.createElement("span");
+    span1.class = "error";
 
-{/* <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Instrument</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Instrument</th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr>
-      <td>John Lennon</td>
-      <td>Rhythm Guitar</td>
-    </tr>
-  </tbody>
-</table> */}
-function display(employee_list) {
+    inputDiv1.appendChild(label1);
+    inputDiv1.appendChild(input1);
+    inputDiv1.appendChild(span1);
+    formDiv.appendChild(inputDiv1);
+
+    var inputDiv2 = document.createElement("div");
+    var label2 = document.createElement("label");
+    label2.innerHTML = "Title";
+    var input2 = document.createElement("input");
+    input2.style.margin = "10px";
+    input2.id = "emp_title";
+    var span2 = document.createElement("span");
+    span2.id = "error";
+
+    inputDiv2.appendChild(label2);
+    inputDiv2.appendChild(input2);
+    inputDiv2.appendChild(span2);
+    formDiv.appendChild(inputDiv2);
+
+
+    var inputDiv3 = document.createElement("div");
+    inputDiv3.style.marginBottom = "10px";
+    var label3 = document.createElement("label");
+    label3.innerHTML = "Extension";
+    var input3 = document.createElement("input");
+    input3.style.margin = "10px";
+    input3.id = "emp_extension";
+    var span3 = document.createElement("span");
+    span3.id = "error";
+
+    inputDiv3.appendChild(label3);
+    inputDiv3.appendChild(input3);
+    inputDiv3.appendChild(span3);
+    formDiv.appendChild(inputDiv3);
+  
+    var submitDiv = document.createElement("div");
+    submitDiv.style.clear = "right";
+    submitDiv.align = "left";
+    
+    var submitBtn = document.createElement("button");
+    submitBtn.id = "btn_emp_add";
+    submitBtn.style.marginBottom = "10px";
+    submitBtn.style.padding = "3px 20px";
+    submitBtn.innerHTML = "Add";
+    submitBtn.addEventListener("click", empAdd);
+    submitDiv.appendChild(submitBtn);
+  
+    formDiv.appendChild(submitDiv);
+
+    var registrationMsgHeader = document.createElement("h3");
+    registrationMsgHeader.id = "registration_header";
+    registrationMsgHeader.innerHTML = "&nbsp;";
+    formDiv.appendChild(registrationMsgHeader);
+
+    var showingEmployeesMsg = document.createElement("h3");
+    formDiv.appendChild(showingEmployeesMsg);
+
+    var employee_info_table = document.createElement("table");
+    employee_info_table.id = "employee_info_table";
+    employee_info_table.style.width = "100%";
+    employee_info_table.style.border = "2px solid gray";
+    employee_info_table.style.background = primaryColor;
+    formDiv.appendChild(employee_info_table);
+  }
+  
+
+var init = function (e) {
     "use strict";
 
-    var i = 0;
+    var mainHeader = document.createElement("h1");
+    mainHeader.innerHTML = "The Employee Management Application";
+    document.body.appendChild(mainHeader);
+  
+    var addEmployeeText = document.createElement("h3");
+    addEmployeeText.id = "addemployee_text";
+    addEmployeeText.innerHTML = "Add employee";
+    document.body.appendChild(addEmployeeText);
 
-    window.console.log(employee_list);
+    createInputs();
+    
+    //Setting Listeners on Delete buttons
+    document.body.addEventListener('click', function (e) {
+        for (var i = 0; i< employee_list.length; i++) {
+            if( e.srcElement.id == employee_list[i][2]+"_btn" ) {
+                deleteEmployee(i, employee_list[i][2]);
+            }
+        }
+    });
+    
+    display();
+}
 
-    $("employee_info_table").previousElementSibling.innerHTML = "Showing "+ employee_list.length + " Employees";
+function display() {
+    "use strict";
 
-    $("employee_info_table").innerHTML += "<thead><tr><th>Name</th><th>Title</th><th>Extension</th><th></th></tr></thead>" +
+    var empInfoTable = $("employee_info_table");
+
+    empInfoTable.previousElementSibling.innerHTML = "Showing "+ employee_list.length + " Employees";
+
+    empInfoTable.innerHTML = "<thead><tr><th>Name</th><th>Title</th><th>Extension</th><th></th></tr></thead>" +
     "<tfoot><tr><th>Name</th><th>Title</th><th>Extension</th><th></th></tr></tfoot><tbody>";
 
-    for (i = 0; i < employee_list.length; i += 1) {
-        $("employee_info_table").innerHTML += "<tr><td>"+ employee_list[i][0] + "</td><td>"+ employee_list[i][1] + "</td><td>"+ employee_list[i][2] + "</td></tr>";
+    for (var i = 0; i < employee_list.length; i += 1) {
+        addEmployeeTableRow(i);
     }
 
-    $("employee_info_table").innerHTML += "</tbody>";
+    empInfoTable.innerHTML += "</tbody>";
 }
 
 window.addEventListener("load", init);
-
-
-// function display_menu() {
-//     "use strict";
-//     window.console.log("Welcome to the Employee Management Application");
-//     window.console.log("");
-//     window.console.log("COMMAND MENU");
-//     window.console.log("show - Show all employees");
-//     window.console.log("add - Add an employee");
-//     window.console.log("del - Delete an employee");
-//     window.console.log("exit - Exit the program");
-//     window.console.log("");
-// }
-// function display(employee_list) {
-//     "use strict";
-//     var i = 1;
-//     employee_list.forEach(function (employee) {
-//         window.console.log(String(i) + ". " + employee);
-//         i += 1;
-//     });
-//     window.console.log("");
-// }
-// function add(employee_list) {
-//     "use strict";
-//     var employee = window.prompt("Enter the employee's name");
-//     employee_list.push(employee);
-//     window.console.log(employee + " was added.");
-//     window.console.log("");
-// }
-// function del(employee_list) {
-//     "use strict";
-//     var num, employee;
-//     num = parseInt(window.prompt("Employee number to delete"), 10);
-//     if (num < 1 || num > employee_list.length) {
-//         window.alert("Invalid employee number.");
-//     } else {
-//         employee = employee_list.splice(num - 1, 1);
-//         window.console.log(employee + ' was deleted.');
-//         /* OR
-//         delete employee_list[num - 1];
-//         window.console.log("Employee number " + num + " was deleted.");
-//         */
-//     }
-// }
-// function main() {
-//     "use strict";
-//     var employee_list, command;
-    
-//     display_menu();
-    
-//     employee_list = ["Zak Ruvalcaba",
-//                     "Sally Smith",
-//                     "Fred Franklin",
-//                     "John Smith",
-//                     "Jane Caruthers"];
-    
-//     while (true) {
-//         command = window.prompt("Enter command");
-//         if (command !== null) {
-//             if (command === "show") {
-//                 display(employee_list);
-//             } else if (command === "add") {
-//                 add(employee_list);
-//             } else if (command === "del") {
-//                 del(employee_list);
-//             } else if (command === "exit") {
-//                 break;
-//             } else {
-//                 window.alert("That is not a valid command.");
-//             }
-//         } else {
-//             break;
-//         }
-//     }
-//     window.console.log("Program terminated.");
-// }
-// // main();
