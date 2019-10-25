@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment 9 Q 25</title>
+    <script src="../global_scripts/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $("#submitBtn").on("click", function() {
+
+                var name = $("#name");
+                var email = $("#email");
+
+                var error = false;
+
+                if (name.val().length < 1) {
+                    alert("Name is a required field.");
+                    name.css("border", "2px solid red");
+                    error = true;
+                } else {
+                    name.css("border", "2px solid green");
+                }
+
+                if (email.val().length < 1) {
+                    alert("Email is a required field.");
+                    email.css("border", "2px solid red");
+                    error = true;
+                } else {
+                    email.css("border", "2px solid green");
+                }
+
+                if (!error) {                    
+                    $("#formData").html("Name: " + name.val() + "<br>Email: " + email.val());
+                    name.css("border", "2px solid green");
+                    email.css("border", "2px solid green");
+                }
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <form>
+        <input id="name" type="text" placeholder="Enter your name"><br><br>
+        <input id="email" type="text" placeholder="Enter your email"><br><br>
+        <button id="submitBtn" type="button">Submit</button>
+    </form>
+    <br><br>
+    <div id="formData"></div>
+</body>
+</html>

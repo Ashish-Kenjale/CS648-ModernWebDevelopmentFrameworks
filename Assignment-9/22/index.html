@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment 9 Q 22</title>
+    <script src="../global_scripts/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("a").attr("href", "modulemedia.com");
+
+            $("body").on("click", "a", function(event) {
+                var element = $(this);
+                event.preventDefault();
+                $("a:visited").css("color", "red");
+                alert(event.target.nodeName + " triggered the event.");
+            });
+        });
+
+        // 22.	Create a link within the web page and set it’s href attribute to browse to modulemedia.com. When the user clicks the link, first, prevent it from redirecting to that web site. Second, programmatically style the link so that its color changes to red. Third, display the name of the node that triggered the event within an alert box.
+    </script>
+</head>
+<body>
+    <a rel="">Navigate to ModuleMedia.com</a>
+</body>
+</html>

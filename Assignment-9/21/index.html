@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment 9 Q 21</title>
+    <script src="../global_scripts/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $("#myDiv1").width("400px").height("400px");
+
+
+            $("body").on({
+                click: function(event) {
+                    $("span").html(event.target.nodeName + " was clicked");
+                },
+
+                mouseenter: function(event) {
+                    $("span").html("The mouse entered " + event.target.nodeName);
+
+                },
+
+                mouseleave: function(event) {
+                    $("span").html("The mouse left " + event.target.nodeName);
+                }
+                
+            }, "div");
+
+        });
+    </script>
+</head>
+<body>
+
+    <div id= "myDiv1" style="background-color: gray"></div>
+    <span>Span tag for events</span>
+    
+</body>
+</html>
