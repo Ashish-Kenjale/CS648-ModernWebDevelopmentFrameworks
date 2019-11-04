@@ -24,6 +24,8 @@ nav ul		{margin-top:50px;text-align:right;}
 nav ul li	{display:inline;}
 nav ul li a,
 nav ul li a:visited	{padding:3px 10px;font-size:130%;text-decoration:none;color:#CC1C0D;}
+div .quicknav {float: center;}
+#testimonials {text-align:center;}
 /* #Page Styles
 ================================================== */
 
